@@ -1,0 +1,128 @@
+project:
+  name: "freight-rate-predictor"
+  version: "1.0.0"
+  random_state: 42
+
+paths:
+  data_raw: "data/raw"
+  data_processed: "data/processed"
+  outputs: "outputs"
+  models: "artifacts/models"
+  tuning: "artifacts/tuning"
+  reports: "artifacts/reports"
+  scorer_script: "score.py.txt"
+
+data:
+  train_file: "train-test.csv"
+  validation_file: "validation.csv"
+  december_file: "december-chart-inputs.csv"
+  validation_template: "validation-predictions-template.csv"
+
+december_lane:
+  pickup: "Lexington"
+  delivery: "Fort Wayne"
+  pickup_lat: 37.9886
+  pickup_lon: -84.4777
+  delivery_lat: 41.0793
+  delivery_lon: -85.1394
+  distance: 360.0
+  equipment: "Dry Van"
+  weight: 32000.0
+
+training:
+  target: "posted_rate"
+  cv_folds: 5
+  holdout_fraction: 0.10
+
+tuning:
+  n_trials: 50
+  timeout: 600
+  metric: "rmse"
+  top_n_to_tune: 3
+
+ensemble:
+  method: "optuna"
+  n_trials: 300
+
+models:
+  enabled:
+    - lightgbm
+    - catboost
+    - xgboost
+    - hist_gradient_boosting
+    - random_forest
+    - extra_trees
+    - ridge
+    - lasso
+    - elastic_net
+    - mlp
+
+  lightgbm:
+    n_estimators: 3000
+    learning_rate: 0.04
+    num_leaves: 127
+    feature_fraction: 0.80
+    bagging_fraction: 0.80
+    bagging_freq: 5
+    min_child_samples: 20
+    reg_alpha: 0.1
+    reg_lambda: 1.0
+    early_stopping_rounds: 100
+
+  catboost:
+    iterations: 3000
+    learning_rate: 0.04
+    depth: 8
+    l2_leaf_reg: 3.0
+    early_stopping_rounds: 100
+
+  xgboost:
+    n_estimators: 3000
+    learning_rate: 0.04
+    max_depth: 7
+    subsample: 0.80
+    colsample_bytree: 0.80
+    reg_alpha: 0.1
+    reg_lambda: 1.0
+    early_stopping_rounds: 100
+
+  hist_gradient_boosting:
+    max_iter: 1000
+    learning_rate: 0.05
+    max_depth: 8
+    min_samples_leaf: 20
+    l2_regularization: 0.1
+
+  random_forest:
+    n_estimators: 500
+    max_depth: null
+    min_samples_leaf: 5
+    max_features: 0.5
+    n_jobs: -1
+
+  extra_trees:
+    n_estimators: 500
+    max_depth: null
+    min_samples_leaf: 5
+    max_features: 0.5
+    n_jobs: -1
+
+  ridge:
+    alpha: 100.0
+
+  lasso:
+    alpha: 10.0
+    max_iter: 5000
+
+  elastic_net:
+    alpha: 10.0
+    l1_ratio: 0.5
+    max_iter: 5000
+
+  mlp:
+    hidden_layer_sizes: [256, 128, 64]
+    activation: "relu"
+    learning_rate_init: 0.001
+    max_iter: 500
+    early_stopping: true
+    n_iter_no_change: 20

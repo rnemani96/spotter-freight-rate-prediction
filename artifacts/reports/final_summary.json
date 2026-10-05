@@ -1,0 +1,14 @@
+{
+    "timestamp": "2026-10-05 17:29:48",
+    "elapsed_seconds": 13.2,
+    "models_used": [
+        "lasso",
+        "ridge",
+        "catboost"
+    ],
+    "ensemble_weights": {
+        "lasso": 0.3333,
+        "ridge": 0.3333,
+        "catboost": 0.3333
+    }
+}

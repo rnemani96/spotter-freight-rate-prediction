@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# ML artefacts — keep artifacts/ structure but exclude large model binaries if needed
+# artifacts/models/*.cbm   # uncomment to exclude CatBoost models
+# artifacts/models/*.joblib
+
+# Optuna databases
+artifacts/tuning/*.db
+
+# Logs (generated at runtime)
+logs/
+
+# Data (raw CSVs live here, keep in repo for reproducibility)
+data/processed/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary / scratch
+*.tmp
+scratch/
